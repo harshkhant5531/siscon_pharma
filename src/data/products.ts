@@ -8,19 +8,20 @@ export const products: Product[] = [
     manufacturer: "Siscon Pharma",
     price: "₹450",
     inStock: true,
-    image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=400&fit=crop",
+    image: "\\assets\\mero.jpg",
     category: "Antibiotic Injections",
   },
-  {
-    id: "cefoperazone-sulbactam-1.5gm",
-    name: "Cefoperazone & Sulbactam Injection",
-    strength: "1.5gm",
-    manufacturer: "Siscon Pharma",
-    price: "₹380",
-    inStock: true,
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=400&h=400&fit=crop",
-    category: "Antibiotic Injections",
-  },
+  // https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=400&fit=crop
+ {
+    "id": "amoxicillin-clavulanate-1.2gm",
+    "name": "Amoxicillin & Potassium Clavulanate Injection",
+    "strength": "1.2 gm",
+    "manufacturer": "Siscon Pharma",
+    "price": "₹250", 
+    "inStock": true,
+    "image": "\\assets\\Amo.jpg",
+    "category": "Antibiotic Injections"
+},
   {
     id: "piperacillin-tazobactam-4.5gm",
     name: "Piperacillin & Tazobactam Injection",
@@ -28,9 +29,10 @@ export const products: Product[] = [
     manufacturer: "Siscon Pharma",
     price: "₹520",
     inStock: true,
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop",
+    image: "\\assets\\piper.jpg",
     category: "Antibiotic Injections",
   },
+  // https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop
   {
     id: "pantoprazole-40mg",
     name: "Pantoprazole Injection",
@@ -38,9 +40,10 @@ export const products: Product[] = [
     manufacturer: "Siscon Pharma",
     price: "₹85",
     inStock: true,
-    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400&h=400&fit=crop",
+    image: "\\assets\\panto.jpg",
     category: "Gastrointestinal",
   },
+  // https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400&h=400&fit=crop
   {
     id: "hydrocortisone-100mg",
     name: "Hydrocortisone Sodium Succinate Injection IP",
@@ -58,9 +61,10 @@ export const products: Product[] = [
     manufacturer: "Siscon Pharma",
     price: "₹65",
     inStock: true,
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=400&fit=crop",
+    image: "\\assets\\para.jpg",
     category: "Critical Care",
   },
+  // https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=400&fit=crop
   {
     id: "amikacin-500mg",
     name: "Amikacin Sulphate Injection",
