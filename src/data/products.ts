@@ -1,0 +1,88 @@
+import { Product } from "@/components/ProductCard";
+
+export const products: Product[] = [
+  {
+    id: "meropenem-1gm",
+    name: "Meropenem Injection",
+    strength: "1gm",
+    manufacturer: "Siscon Pharma",
+    price: "₹450",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=400&fit=crop",
+    category: "Antibiotic Injections",
+  },
+  {
+    id: "cefoperazone-sulbactam-1.5gm",
+    name: "Cefoperazone & Sulbactam Injection",
+    strength: "1.5gm",
+    manufacturer: "Siscon Pharma",
+    price: "₹380",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=400&h=400&fit=crop",
+    category: "Antibiotic Injections",
+  },
+  {
+    id: "piperacillin-tazobactam-4.5gm",
+    name: "Piperacillin & Tazobactam Injection",
+    strength: "4.5gm",
+    manufacturer: "Siscon Pharma",
+    price: "₹520",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop",
+    category: "Antibiotic Injections",
+  },
+  {
+    id: "pantoprazole-40mg",
+    name: "Pantoprazole Injection",
+    strength: "40mg",
+    manufacturer: "Siscon Pharma",
+    price: "₹85",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400&h=400&fit=crop",
+    category: "Gastrointestinal",
+  },
+  {
+    id: "hydrocortisone-100mg",
+    name: "Hydrocortisone Sodium Succinate Injection IP",
+    strength: "100mg",
+    manufacturer: "Siscon Pharma",
+    price: "₹120",
+    inStock: false,
+    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=400&h=400&fit=crop",
+    category: "Emergency Medicines",
+  },
+  {
+    id: "paracetamol-100ml",
+    name: "Paracetamol Infusion IP",
+    strength: "100ml",
+    manufacturer: "Siscon Pharma",
+    price: "₹65",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=400&fit=crop",
+    category: "Critical Care",
+  },
+  {
+    id: "amikacin-500mg",
+    name: "Amikacin Sulphate Injection",
+    strength: "500mg",
+    manufacturer: "Siscon Pharma",
+    price: "₹95",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&h=400&fit=crop",
+    category: "Antibiotic Injections",
+  },
+  {
+    id: "ceftriaxone-1gm",
+    name: "Ceftriaxone Injection",
+    strength: "1gm",
+    manufacturer: "Siscon Pharma",
+    price: "₹75",
+    inStock: true,
+    image: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400&h=400&fit=crop",
+    category: "Antibiotic Injections",
+  },
+];
+
+export const getProductById = (id: string): Product | undefined => {
+  return products.find((product) => product.id === id);
+};

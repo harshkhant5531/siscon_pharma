@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 225 25% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 225 25% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 25% 25%;
+
+    /* Blue-Gray Primary (from logo text) */
+    --primary: 225 30% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Light blue-gray for secondary */
+    --secondary: 225 25% 96%;
+    --secondary-foreground: 225 30% 45%;
+
+    /* Soft gray for muted */
+    --muted: 225 20% 96%;
+    --muted-foreground: 225 15% 50%;
+
+    /* Pink/Magenta Accent (from logo icon) */
+    --accent: 295 65% 72%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Success green for stock badges */
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning for out of stock */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 225 20% 90%;
+    --input: 225 20% 90%;
+    --ring: 295 65% 72%;
+
+    --radius: 0.5rem;
+
+    /* Custom pharma tokens */
+    --header-bg: 225 30% 55%;
+    --header-foreground: 0 0% 100%;
+    --nav-bg: 225 20% 98%;
+    --nav-border: 225 20% 92%;
+    --category-bg: 295 40% 97%;
+    --category-hover: 295 50% 93%;
+    --card-shadow: 0 2px 8px hsl(225 20% 50% / 0.08);
+    --card-shadow-hover: 0 8px 24px hsl(295 65% 72% / 0.15);
+    --footer-bg: 225 30% 18%;
+    --footer-foreground: 225 15% 85%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 295 65% 72%;
+  }
+
+  .dark {
+    --background: 225 30% 8%;
+    --foreground: 225 15% 95%;
+
+    --card: 225 30% 12%;
+    --card-foreground: 225 15% 95%;
+
+    --popover: 225 30% 12%;
+    --popover-foreground: 225 15% 95%;
+
+    --primary: 225 35% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 225 25% 18%;
+    --secondary-foreground: 225 30% 85%;
+
+    --muted: 225 20% 18%;
+    --muted-foreground: 225 15% 65%;
+
+    --accent: 295 55% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 60% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 80% 45%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 225 20% 22%;
+    --input: 225 20% 22%;
+    --ring: 295 55% 65%;
+
+    --header-bg: 225 30% 12%;
+    --header-foreground: 0 0% 100%;
+    --nav-bg: 225 30% 10%;
+    --nav-border: 225 20% 18%;
+    --category-bg: 295 25% 15%;
+    --category-hover: 295 30% 20%;
+    --footer-bg: 225 35% 6%;
+    --footer-foreground: 225 15% 75%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 295 65% 72%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .pharma-header {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .pharma-nav {
+    @apply bg-[hsl(var(--nav-bg))] border-b border-[hsl(var(--nav-border))];
+  }
+
+  .pharma-category-nav {
+    @apply bg-[hsl(var(--category-bg))];
+  }
+
+  .pharma-card {
+    @apply bg-card rounded-lg border border-border;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+
+  .pharma-card:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .pharma-footer {
+    @apply bg-[hsl(var(--footer-bg))] text-[hsl(var(--footer-foreground))];
+  }
+
+  .stock-badge-available {
+    @apply bg-success text-success-foreground;
+  }
+
+  .stock-badge-unavailable {
+    @apply bg-muted text-muted-foreground;
+  }
+
+  .category-pill {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200;
+    @apply bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .category-pill-active {
+    @apply bg-accent text-accent-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
