@@ -60,6 +60,16 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Theme (Light / Dark)
+
+- This project supports light and dark themes via class-based Tailwind variables.
+- Use the theme toggle in the **header** (sun/moon icon) to switch between light and dark modes. Preference is persisted between sessions.
+
+## Run locally
+
+1. npm install
+2. npm run dev
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

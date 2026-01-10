@@ -1,5 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/cart";
+import { toast } from "@/components/ui/sonner";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 
@@ -19,6 +21,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
   return (
     <div className="pharma-card overflow-hidden group">
       <Link to={`/product/${product.id}`}>
@@ -46,8 +49,12 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
         </Link>
-        <p className="text-sm text-primary font-medium mt-1">{product.strength}</p>
-        <p className="text-xs text-muted-foreground mt-1">By {product.manufacturer}</p>
+        <p className="text-sm text-primary font-medium mt-1">
+          {product.strength}
+        </p>
+        <p className="text-xs text-muted-foreground mt-1">
+          By {product.manufacturer}
+        </p>
 
         <div className="mt-3 flex items-center justify-between gap-2">
           <span className="text-sm font-semibold text-foreground">
@@ -59,6 +66,16 @@ export function ProductCard({ product }: ProductCardProps) {
           className="w-full mt-3"
           disabled={!product.inStock}
           variant={product.inStock ? "default" : "secondary"}
+          onClick={() => {
+            if (!product.inStock) return;
+            addToCart(product, 1);
+            toast.success(`${product.name} added to cart`, {
+              action: {
+                label: "View Cart",
+                onClick: () => (window.location.href = "/cart"),
+              },
+            });
+          }}
         >
           {product.inStock ? (
             <>
@@ -73,3 +90,5 @@ export function ProductCard({ product }: ProductCardProps) {
     </div>
   );
 }
+
+export default ProductCard;
