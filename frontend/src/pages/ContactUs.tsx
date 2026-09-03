@@ -131,7 +131,7 @@ export default function ContactUs() {
                       `Name: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
                     );
 
-                    window.location.href = `mailto:sisconpharma14@gmail.com?subject=${subject}&body=${body}`;
+                    window.location.href = `mailto:khantharsh87@gmail.com?subject=${subject}&body=${body}`;
                   }}
                 >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
