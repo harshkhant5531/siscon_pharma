@@ -146,6 +146,26 @@ export const api = {
   },
 
   // Health check
+  async sendContactMessage(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    countryCode: string;
+    phone: string;
+    message: string;
+  }) {
+    const res = await fetch(`${API_BASE_URL}/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const response = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(response.error || 'Failed to send message');
+    }
+    return response;
+  },
+
   async healthCheck() {
     const res = await fetch(`${API_BASE_URL}/health`);
     return res.json();

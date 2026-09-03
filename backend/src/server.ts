@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 import authRoutes from "./routes/auth";
+import contactRoutes from "./routes/contact";
 import productRoutes from "./routes/products";
 import invoiceRoutes from "./routes/invoices";
 import uploadRoutes from "./routes/upload";
@@ -39,6 +40,7 @@ app.get("/api/health", (_req, res) => {
 
 // Public routes
 app.use("/api/auth", authRoutes);
+app.use("/api/contact", contactRoutes);
 
 // Protected routes — require login
 app.use("/api/products", authMiddleware, productRoutes);

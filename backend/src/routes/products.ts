@@ -39,6 +39,9 @@ router.get('/:id', async (req: Request, res: Response) => {
 router.post('/', upload.single('image'), async (req: Request, res: Response) => {
   try {
     let imageUrl = req.body.image || null;
+    const inStockValue = req.body.inStock;
+    const parsedInStock =
+      inStockValue === undefined ? true : inStockValue === true || inStockValue === 'true' || inStockValue === '1';
 
     // If a file was uploaded, push it to Cloudinary
     if (req.file) {
@@ -57,7 +60,7 @@ router.post('/', upload.single('image'), async (req: Request, res: Response) => 
         strength: req.body.strength || null,
         manufacturer: req.body.manufacturer || 'Siscon Pharma',
         price: req.body.price || null,
-        inStock: req.body.inStock !== undefined ? Boolean(req.body.inStock) : true,
+        inStock: parsedInStock,
         // @ts-ignore
         quantity: req.body.quantity !== undefined ? parseInt(req.body.quantity, 10) : 0,
         image: imageUrl,
@@ -81,6 +84,10 @@ router.put('/:id', upload.single('image'), async (req: Request, res: Response) =
       return res.status(404).json({ error: 'Product not found' });
     }
 
+    const inStockValue = req.body.inStock;
+    const parsedInStock =
+      inStockValue === undefined ? existing.inStock : inStockValue === true || inStockValue === 'true' || inStockValue === '1';
+
     let imageUrl = req.body.image || existing.image;
 
     if (req.file) {
@@ -99,7 +106,7 @@ router.put('/:id', upload.single('image'), async (req: Request, res: Response) =
         strength: req.body.strength ?? existing.strength,
         manufacturer: req.body.manufacturer ?? existing.manufacturer,
         price: req.body.price ?? existing.price,
-        inStock: req.body.inStock !== undefined ? Boolean(req.body.inStock) : existing.inStock,
+        inStock: parsedInStock,
         // @ts-ignore
         quantity: req.body.quantity !== undefined ? parseInt(req.body.quantity, 10) : existing.quantity,
         image: imageUrl,

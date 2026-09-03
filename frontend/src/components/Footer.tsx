@@ -70,11 +70,11 @@ export function Footer() {
             </p>
             <div className="space-y-3">
               <a
-                href="mailto:khantharsh88@gmail.com"
+                href="mailto:sisconpharma14@gmail.com"
                 className="flex items-center gap-3 text-sm text-[hsl(var(--footer-foreground))]/80 hover:text-accent transition-colors"
               >
                 <Mail className="h-4 w-4 text-accent" />
-                <span>khantharsh88@gmail.com</span>
+                <span>sisconpharma14@gmail.com</span>
               </a>
               <a
                 href="tel:+919512131217"

@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
 
 type FormData = {
   firstName: string;
@@ -69,7 +70,7 @@ export default function ContactUs() {
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -77,20 +78,20 @@ export default function ContactUs() {
       return;
     }
 
-    const subject = encodeURIComponent(
-      "New enquiry from Siscon Pharma website",
-    );
-    const body = encodeURIComponent(
-      `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.countryCode} ${formData.phone}\n\nMessage:\n${formData.message}`,
-    );
-
-    window.location.href = `mailto:khantharsh88@gmail.com?subject=${subject}&body=${body}`;
-
-    setSubmitMessage(
-      "Your email app is open with the message ready. Please click Send to deliver it to khantharsh88@gmail.com.",
-    );
-    setFormData(initialFormData);
-    setErrors({});
+    try {
+      await api.sendContactMessage(formData);
+      setSubmitMessage(
+        "Your message has been sent successfully. We will get back to you soon.",
+      );
+      setFormData(initialFormData);
+      setErrors({});
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Unable to send your message right now.";
+      setSubmitMessage(message);
+    }
   };
 
   return (
@@ -147,7 +148,7 @@ export default function ContactUs() {
                         Drop us a line anytime:
                       </p>
                       <p className="text-primary font-semibold mt-1">
-                        khantharsh88@gmail.com
+                        sisconpharma14@gmail.com
                       </p>
                     </div>
                   </div>

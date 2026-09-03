@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Product } from '@/components/ProductCard';
-import { products as fallbackProducts } from '@/data/products';
-import { api } from '@/lib/api';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { Product } from "@/components/ProductCard";
+import { products as fallbackProducts } from "@/data/products";
+import { api } from "@/lib/api";
 
 interface ProductContextType {
   products: Product[];
@@ -31,8 +37,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       }
       // If API returns empty, keep fallback data
     } catch (err) {
-      console.warn('API unavailable, using local product data:', err);
-      setError('Using offline data');
+      console.warn("API unavailable, using local product data:", err);
+      setError("Using offline data");
       // Keep fallback products — graceful degradation
     } finally {
       setLoading(false);
@@ -51,21 +57,25 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         optimisticProduct.image = URL.createObjectURL(product.image);
       }
       setProducts((prev) => [...prev, optimisticProduct as Product]);
-      
+
       if (!error) {
         const formData = new FormData();
         Object.entries(product).forEach(([key, value]) => {
           if (value instanceof File) {
             formData.append(key, value);
+          } else if (typeof value === "boolean") {
+            formData.append(key, value ? "true" : "false");
           } else {
-            formData.append(key, typeof value === 'boolean' ? String(value) : (value as string));
+            formData.append(key, String(value ?? ""));
           }
         });
         const savedProduct = await api.createProduct(formData as any);
-        setProducts((prev) => prev.map(p => p.id === optimisticProduct.id ? savedProduct : p));
+        setProducts((prev) =>
+          prev.map((p) => (p.id === optimisticProduct.id ? savedProduct : p)),
+        );
       }
     } catch (err) {
-      console.error('Failed to add product to backend', err);
+      console.error("Failed to add product to backend", err);
     }
   };
 
@@ -75,21 +85,27 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       if (product.image instanceof File) {
         optimisticProduct.image = URL.createObjectURL(product.image);
       }
-      setProducts((prev) => prev.map((p) => p.id === id ? (optimisticProduct as Product) : p));
+      setProducts((prev) =>
+        prev.map((p) => (p.id === id ? (optimisticProduct as Product) : p)),
+      );
       if (!error) {
         const formData = new FormData();
         Object.entries(product).forEach(([key, value]) => {
           if (value instanceof File) {
             formData.append(key, value);
+          } else if (typeof value === "boolean") {
+            formData.append(key, value ? "true" : "false");
           } else {
-            formData.append(key, typeof value === 'boolean' ? String(value) : (value as string));
+            formData.append(key, String(value ?? ""));
           }
         });
         const savedProduct = await api.updateProduct(id, formData as any);
-        setProducts((prev) => prev.map(p => p.id === id ? savedProduct : p));
+        setProducts((prev) =>
+          prev.map((p) => (p.id === id ? savedProduct : p)),
+        );
       }
     } catch (err) {
-      console.error('Failed to update product on backend', err);
+      console.error("Failed to update product on backend", err);
     }
   };
 
@@ -100,7 +116,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         await api.deleteProduct(id);
       }
     } catch (err) {
-      console.error('Failed to delete product from backend', err);
+      console.error("Failed to delete product from backend", err);
     }
   };
 
@@ -113,7 +129,18 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ products, loading, error, addProduct, updateProduct, removeProduct, getProductById, refreshProducts }}>
+    <ProductContext.Provider
+      value={{
+        products,
+        loading,
+        error,
+        addProduct,
+        updateProduct,
+        removeProduct,
+        getProductById,
+        refreshProducts,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );
@@ -122,7 +149,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 export const useProducts = () => {
   const context = useContext(ProductContext);
   if (context === undefined) {
-    throw new Error('useProducts must be used within a ProductProvider');
+    throw new Error("useProducts must be used within a ProductProvider");
   }
   return context;
 };
