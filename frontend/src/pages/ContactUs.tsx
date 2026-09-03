@@ -9,6 +9,7 @@ type FormData = {
   firstName: string;
   lastName: string;
   email: string;
+  countryCode: string;
   phone: string;
   message: string;
 };
@@ -19,6 +20,7 @@ const initialFormData: FormData = {
   firstName: "",
   lastName: "",
   email: "",
+  countryCode: "+91",
   phone: "",
   message: "",
 };
@@ -47,8 +49,9 @@ export default function ContactUs() {
 
     if (!formData.phone.trim()) {
       nextErrors.phone = "Phone number is required.";
-    } else if (!/^[+()\d\s-]{8,}$/.test(formData.phone)) {
-      nextErrors.phone = "Please enter a valid phone number.";
+    } else if (!/^\d{10}$/.test(formData.phone.trim())) {
+      nextErrors.phone =
+        "Please enter exactly 10 digits for the mobile number.";
     }
 
     if (!formData.message.trim()) {
@@ -74,8 +77,17 @@ export default function ContactUs() {
       return;
     }
 
+    const subject = encodeURIComponent(
+      "New enquiry from Siscon Pharma website",
+    );
+    const body = encodeURIComponent(
+      `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.countryCode} ${formData.phone}\n\nMessage:\n${formData.message}`,
+    );
+
+    window.location.href = `mailto:khantharsh87@gmail.com?subject=${subject}&body=${body}`;
+
     setSubmitMessage(
-      "Your details are valid. Please send the message manually from your email app to sisconpharma14@gmail.com.",
+      "Your email app is open with the message ready. Please click Send to deliver it to sisconpharma14@gmail.com.",
     );
     setFormData(initialFormData);
     setErrors({});
@@ -245,15 +257,37 @@ export default function ContactUs() {
                     <label className="text-sm font-medium text-slate-700">
                       Phone Number
                     </label>
-                    <Input
-                      name="phone"
-                      type="tel"
-                      placeholder="+91"
-                      value={formData.phone}
-                      onChange={(e) => handleChange("phone", e.target.value)}
-                      aria-invalid={!!errors.phone}
-                      className={errors.phone ? "border-red-500" : ""}
-                    />
+                    <div className="flex gap-2">
+                      <select
+                        name="countryCode"
+                        value={formData.countryCode}
+                        onChange={(e) =>
+                          handleChange("countryCode", e.target.value)
+                        }
+                        className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                      >
+                        <option value="+91">+91 (India)</option>
+                        <option value="+1">+1 (USA)</option>
+                        <option value="+44">+44 (UK)</option>
+                        <option value="+61">+61 (Australia)</option>
+                        <option value="+971">+971 (UAE)</option>
+                      </select>
+                      <Input
+                        name="phone"
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder="9876543210"
+                        value={formData.phone}
+                        onChange={(e) => {
+                          const value = e.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 10);
+                          handleChange("phone", value);
+                        }}
+                        aria-invalid={!!errors.phone}
+                        className={errors.phone ? "border-red-500" : ""}
+                      />
+                    </div>
                     {errors.phone && (
                       <p className="text-xs text-red-600">{errors.phone}</p>
                     )}
