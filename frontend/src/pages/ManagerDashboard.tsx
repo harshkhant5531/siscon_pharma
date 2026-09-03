@@ -34,13 +34,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
 import PageLoader from "@/components/PageLoader";
 
@@ -936,56 +929,52 @@ export default function ManagerDashboard() {
                         <Card key={product.id}>
                           <CardContent className="p-4 flex flex-col sm:flex-row justify-between gap-4">
                             <div className="flex gap-4 items-start w-full">
-                              <Dialog
-                                open={previewProductId === product.id}
-                                onOpenChange={(isOpen) => {
-                                  if (!isOpen) setPreviewProductId(null);
-                                }}
+                              <div
+                                className="relative"
+                                onMouseEnter={() =>
+                                  setPreviewProductId(product.id)
+                                }
+                                onMouseLeave={() => setPreviewProductId(null)}
                               >
-                                <DialogTrigger asChild>
-                                  <button
-                                    type="button"
-                                    className="block rounded border p-1 shrink-0 bg-white transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                    onMouseEnter={() =>
-                                      setPreviewProductId(product.id)
-                                    }
-                                    onMouseLeave={() => {
-                                      window.setTimeout(() => {
-                                        setPreviewProductId((current) =>
-                                          current === product.id
-                                            ? null
-                                            : current,
-                                        );
-                                      }, 120);
-                                    }}
-                                    onFocus={() =>
-                                      setPreviewProductId(product.id)
-                                    }
-                                    onBlur={() => setPreviewProductId(null)}
-                                  >
-                                    <img
-                                      src={product.image}
-                                      alt={product.name}
-                                      className="w-16 h-16 md:w-20 md:h-20 object-contain rounded"
-                                    />
-                                  </button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-2xl p-4 sm:p-6">
-                                  <DialogTitle className="sr-only">
-                                    {product.name} image preview
-                                  </DialogTitle>
-                                  <DialogDescription className="sr-only">
-                                    Expanded view of the product image.
-                                  </DialogDescription>
-                                  <div className="flex items-center justify-center rounded-lg bg-slate-50 p-2 sm:p-4">
-                                    <img
-                                      src={product.image}
-                                      alt={product.name}
-                                      className="max-h-[70vh] max-w-full object-contain rounded-md"
-                                    />
+                                <button
+                                  type="button"
+                                  className="block rounded border p-1 shrink-0 bg-white transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                  onFocus={() =>
+                                    setPreviewProductId(product.id)
+                                  }
+                                  onBlur={() => setPreviewProductId(null)}
+                                >
+                                  <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="w-16 h-16 md:w-20 md:h-20 object-contain rounded"
+                                  />
+                                </button>
+
+                                {previewProductId === product.id && (
+                                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[1px]">
+                                    <div className="relative max-w-3xl w-full rounded-xl border border-white/60 bg-white p-4 shadow-2xl">
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          setPreviewProductId(null)
+                                        }
+                                        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-lg font-bold text-slate-700 hover:bg-slate-200"
+                                        aria-label="Close preview"
+                                      >
+                                        ×
+                                      </button>
+                                      <div className="flex items-center justify-center overflow-hidden rounded-lg bg-slate-50 p-2 sm:p-4">
+                                        <img
+                                          src={product.image}
+                                          alt={product.name}
+                                          className="max-h-[75vh] max-w-full object-contain rounded-md"
+                                        />
+                                      </div>
+                                    </div>
                                   </div>
-                                </DialogContent>
-                              </Dialog>
+                                )}
+                              </div>
                               <div className="flex-1 w-full">
                                 <h4 className="font-semibold text-foreground text-lg leading-tight">
                                   {product.name}
