@@ -84,10 +84,10 @@ export default function ContactUs() {
       `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.countryCode} ${formData.phone}\n\nMessage:\n${formData.message}`,
     );
 
-    window.location.href = `mailto:khantharsh87@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:khantharsh88@gmail.com?subject=${subject}&body=${body}`;
 
     setSubmitMessage(
-      "Your email app is open with the message ready. Please click Send to deliver it to sisconpharma14@gmail.com.",
+      "Your email app is open with the message ready. Please click Send to deliver it to khantharsh88@gmail.com.",
     );
     setFormData(initialFormData);
     setErrors({});
@@ -147,7 +147,7 @@ export default function ContactUs() {
                         Drop us a line anytime:
                       </p>
                       <p className="text-primary font-semibold mt-1">
-                        sisconpharma14@gmail.com
+                        khantharsh88@gmail.com
                       </p>
                     </div>
                   </div>
@@ -276,7 +276,7 @@ export default function ContactUs() {
                         name="phone"
                         type="tel"
                         inputMode="numeric"
-                        placeholder="9876543210"
+                        placeholder="1234567890"
                         value={formData.phone}
                         onChange={(e) => {
                           const value = e.target.value
