@@ -82,9 +82,7 @@ export default function ManagerDashboard() {
 
   const [open, setOpen] = useState(false);
   const [searchCmd, setSearchCmd] = useState("");
-  const [hoveredImageProductId, setHoveredImageProductId] = useState<
-    string | null
-  >(null);
+  const [previewProductId, setPreviewProductId] = useState<string | null>(null);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -939,9 +937,9 @@ export default function ManagerDashboard() {
                           <CardContent className="p-4 flex flex-col sm:flex-row justify-between gap-4">
                             <div className="flex gap-4 items-start w-full">
                               <Dialog
-                                open={hoveredImageProductId === product.id}
+                                open={previewProductId === product.id}
                                 onOpenChange={(isOpen) => {
-                                  if (!isOpen) setHoveredImageProductId(null);
+                                  if (!isOpen) setPreviewProductId(null);
                                 }}
                               >
                                 <DialogTrigger asChild>
@@ -949,11 +947,21 @@ export default function ManagerDashboard() {
                                     type="button"
                                     className="block rounded border p-1 shrink-0 bg-white transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50"
                                     onMouseEnter={() =>
-                                      setHoveredImageProductId(product.id)
+                                      setPreviewProductId(product.id)
                                     }
+                                    onMouseLeave={() => {
+                                      window.setTimeout(() => {
+                                        setPreviewProductId((current) =>
+                                          current === product.id
+                                            ? null
+                                            : current,
+                                        );
+                                      }, 120);
+                                    }}
                                     onFocus={() =>
-                                      setHoveredImageProductId(product.id)
+                                      setPreviewProductId(product.id)
                                     }
+                                    onBlur={() => setPreviewProductId(null)}
                                   >
                                     <img
                                       src={product.image}
