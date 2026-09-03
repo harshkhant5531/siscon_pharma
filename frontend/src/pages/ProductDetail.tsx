@@ -15,9 +15,9 @@ const ProductDetail = () => {
   const product = id ? getProductById(id) : null;
   const { addToCart } = useCart();
   const { user } = useAuth();
-  const isManager = user?.role === 'manager';
+  const isManager = user?.role === "manager";
 
-  const isAvailable = product && (product.inStock && product.quantity !== 0);
+  const isAvailable = product && product.inStock && product.quantity !== 0;
 
   if (!product) {
     return (
@@ -55,7 +55,7 @@ const ProductDetail = () => {
 
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Image */}
-            <div className="pharma-card p-8 aspect-square flex items-center justify-center">
+            <div className="product-image-zoom pharma-card p-8 aspect-square flex items-center justify-center">
               <img
                 src={product.image}
                 alt={product.name}

@@ -28,22 +28,20 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { user } = useAuth();
-  const isManager = user?.role === 'manager';
+  const isManager = user?.role === "manager";
   const isAvailable = product.inStock && product.quantity !== 0;
   return (
     <div className="pharma-card overflow-hidden group">
       <Link to={`/product/${product.id}`}>
-        <div className="aspect-square bg-muted/30 p-4 flex items-center justify-center relative overflow-hidden">
+        <div className="product-image-zoom aspect-square bg-muted/30 p-4 flex items-center justify-center relative overflow-hidden">
           <img
             src={product.image}
             alt={product.name}
-            className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
+            className="max-h-full max-w-full object-contain"
           />
           <Badge
             className={`absolute top-3 right-3 ${
-              isAvailable
-                ? "stock-badge-available"
-                : "stock-badge-unavailable"
+              isAvailable ? "stock-badge-available" : "stock-badge-unavailable"
             }`}
           >
             {isAvailable ? "In Stock" : "Out of Stock"}
