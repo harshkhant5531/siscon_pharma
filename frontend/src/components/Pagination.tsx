@@ -43,18 +43,19 @@ export function Pagination({
   };
 
   return (
-    <div className="flex items-center justify-center gap-2 py-8">
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 py-8">
       <Button
         variant="outline"
         size="sm"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className="w-full sm:w-auto"
       >
         <ChevronLeft className="h-4 w-4 mr-1" />
         Previous
       </Button>
 
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center justify-center gap-1">
         {visiblePages.map((page, index) => renderPageButton(page, index))}
       </div>
 
@@ -63,6 +64,7 @@ export function Pagination({
         size="sm"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className="w-full sm:w-auto"
       >
         Next
         <ChevronRight className="h-4 w-4 ml-1" />

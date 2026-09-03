@@ -31,9 +31,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const isManager = user?.role === "manager";
   const isAvailable = product.inStock && product.quantity !== 0;
   return (
-    <div className="pharma-card overflow-hidden group">
-      <Link to={`/product/${product.id}`}>
-        <div className="product-image-zoom aspect-square bg-muted/30 p-4 flex items-center justify-center relative overflow-hidden">
+    <div className="pharma-card group h-full flex flex-col overflow-hidden">
+      <Link to={`/product/${product.id}`} className="block">
+        <div className="product-image-zoom aspect-square p-4 flex items-center justify-center relative">
           <img
             src={product.image}
             alt={product.name}
@@ -49,8 +49,8 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       </Link>
 
-      <div className="p-4">
-        <Link to={`/product/${product.id}`}>
+      <div className="p-4 flex flex-1 flex-col">
+        <Link to={`/product/${product.id}`} className="block">
           <h3 className="font-medium text-foreground hover:text-primary transition-colors line-clamp-2 min-h-[2.5rem]">
             {product.name}
           </h3>

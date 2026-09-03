@@ -217,7 +217,7 @@ export default function ManagerDashboard() {
       </header>
 
       <main className="flex-1 py-10">
-        <div className="container mx-auto px-4 max-w-5xl">
+        <div className="container mx-auto px-4 max-w-7xl">
           {showVaultMode ? (
             <div className="mb-8">
               {!vaultUnlocked ? (
@@ -693,8 +693,8 @@ export default function ManagerDashboard() {
                 </Card>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <Card className="lg:col-span-4 h-fit sticky top-24">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[420px_minmax(0,1fr)]">
+                <Card className="h-fit sticky top-24 shadow-sm">
                   <CardHeader>
                     <CardTitle>
                       {editId ? "Edit Product" : "Add New Product"}
@@ -904,7 +904,7 @@ export default function ManagerDashboard() {
                   </CardContent>
                 </Card>
 
-                <div className="lg:col-span-8 space-y-4">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-border shadow-sm">
                     <h2 className="text-xl font-bold font-heading">
                       Manage Products

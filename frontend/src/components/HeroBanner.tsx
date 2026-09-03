@@ -6,8 +6,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 
@@ -45,7 +43,9 @@ export function HeroBanner() {
     const onSelect = () => setCurrent(api.selectedScrollSnap());
     api.on("select", onSelect);
     onSelect();
-    return () => { api.off("select", onSelect); };
+    return () => {
+      api.off("select", onSelect);
+    };
   }, [api]);
 
   // Auto-advance
@@ -72,11 +72,7 @@ export function HeroBanner() {
       </div>
 
       <div className="container mx-auto px-4 py-16 md:py-24 relative">
-        <Carousel
-          setApi={setApi}
-          opts={{ loop: true }}
-          className="w-full"
-        >
+        <Carousel setApi={setApi} opts={{ loop: true }} className="w-full">
           <CarouselContent>
             {slides.map((slide, index) => (
               <CarouselItem key={index}>
@@ -85,20 +81,32 @@ export function HeroBanner() {
                     {slide.tag}
                   </span>
                   <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6 animate-in slide-in-from-bottom-4 duration-500 delay-200">
-                    {slide.title}<br />
-                    <span className="text-primary-foreground/90">{slide.subtitle}</span>
+                    {slide.title}
+                    <br />
+                    <span className="text-primary-foreground/90">
+                      {slide.subtitle}
+                    </span>
                   </h1>
                   <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-xl animate-in fade-in duration-500 delay-300">
                     {slide.desc}
                   </p>
                   <div className="flex flex-wrap gap-4 animate-in fade-in duration-500 delay-500">
-                    <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+                    <Button
+                      size="lg"
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                      asChild
+                    >
                       <Link to="/products">
                         Browse Products
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button size="lg" variant="outline" className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" asChild>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                      asChild
+                    >
                       <Link to="/contact">Contact Sales</Link>
                     </Button>
                   </div>
@@ -106,12 +114,6 @@ export function HeroBanner() {
               </CarouselItem>
             ))}
           </CarouselContent>
-
-          {/* Prev / Next arrows — visible on hover */}
-          <div className="hidden md:block">
-            <CarouselPrevious className="left-auto right-12 bg-primary-foreground/20 hover:bg-primary-foreground/40 text-primary-foreground border-none opacity-0 group-hover:opacity-100 transition-opacity" />
-            <CarouselNext className="right-0 bg-primary-foreground/20 hover:bg-primary-foreground/40 text-primary-foreground border-none opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
         </Carousel>
 
         {/* Dot indicators + progress bar */}
@@ -122,7 +124,10 @@ export function HeroBanner() {
               onClick={() => api?.scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
               className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              style={{ width: i === current ? "2.5rem" : "0.75rem", background: "rgba(255,255,255,0.3)" }}
+              style={{
+                width: i === current ? "2.5rem" : "0.75rem",
+                background: "rgba(255,255,255,0.3)",
+              }}
             >
               {i === current && (
                 <span
@@ -151,22 +156,34 @@ export function HeroBanner() {
           <div className="flex items-center gap-3 bg-primary-foreground/10 rounded-lg p-4 transition-transform hover:scale-105 cursor-pointer">
             <Shield className="h-8 w-8 text-primary-foreground" />
             <div>
-              <p className="text-sm font-semibold text-primary-foreground">WHO-GMP Certified</p>
-              <p className="text-xs text-primary-foreground/70">Quality Assured</p>
+              <p className="text-sm font-semibold text-primary-foreground">
+                WHO-GMP Certified
+              </p>
+              <p className="text-xs text-primary-foreground/70">
+                Quality Assured
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-3 bg-primary-foreground/10 rounded-lg p-4 transition-transform hover:scale-105 cursor-pointer">
             <Truck className="h-8 w-8 text-primary-foreground" />
             <div>
-              <p className="text-sm font-semibold text-primary-foreground">Pan-India Delivery</p>
-              <p className="text-xs text-primary-foreground/70">Fast & Reliable</p>
+              <p className="text-sm font-semibold text-primary-foreground">
+                Pan-India Delivery
+              </p>
+              <p className="text-xs text-primary-foreground/70">
+                Fast & Reliable
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-3 bg-primary-foreground/10 rounded-lg p-4 transition-transform hover:scale-105 cursor-pointer">
             <Award className="h-8 w-8 text-primary-foreground" />
             <div>
-              <p className="text-sm font-semibold text-primary-foreground">10+ Years</p>
-              <p className="text-xs text-primary-foreground/70">Industry Experience</p>
+              <p className="text-sm font-semibold text-primary-foreground">
+                10+ Years
+              </p>
+              <p className="text-xs text-primary-foreground/70">
+                Industry Experience
+              </p>
             </div>
           </div>
         </div>
