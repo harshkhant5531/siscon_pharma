@@ -951,14 +951,8 @@ export default function ManagerDashboard() {
                                     onMouseEnter={() =>
                                       setHoveredImageProductId(product.id)
                                     }
-                                    onMouseLeave={() =>
-                                      setHoveredImageProductId(null)
-                                    }
                                     onFocus={() =>
                                       setHoveredImageProductId(product.id)
-                                    }
-                                    onBlur={() =>
-                                      setHoveredImageProductId(null)
                                     }
                                   >
                                     <img
