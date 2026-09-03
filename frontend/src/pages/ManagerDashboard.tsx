@@ -34,6 +34,13 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
 import PageLoader from "@/components/PageLoader";
 
@@ -75,6 +82,9 @@ export default function ManagerDashboard() {
 
   const [open, setOpen] = useState(false);
   const [searchCmd, setSearchCmd] = useState("");
+  const [hoveredImageProductId, setHoveredImageProductId] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -928,11 +938,52 @@ export default function ManagerDashboard() {
                         <Card key={product.id}>
                           <CardContent className="p-4 flex flex-col sm:flex-row justify-between gap-4">
                             <div className="flex gap-4 items-start w-full">
-                              <img
-                                src={product.image}
-                                alt={product.name}
-                                className="w-16 h-16 md:w-20 md:h-20 object-contain rounded border p-1 shrink-0 bg-white"
-                              />
+                              <Dialog
+                                open={hoveredImageProductId === product.id}
+                                onOpenChange={(isOpen) => {
+                                  if (!isOpen) setHoveredImageProductId(null);
+                                }}
+                              >
+                                <DialogTrigger asChild>
+                                  <button
+                                    type="button"
+                                    className="block rounded border p-1 shrink-0 bg-white transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    onMouseEnter={() =>
+                                      setHoveredImageProductId(product.id)
+                                    }
+                                    onMouseLeave={() =>
+                                      setHoveredImageProductId(null)
+                                    }
+                                    onFocus={() =>
+                                      setHoveredImageProductId(product.id)
+                                    }
+                                    onBlur={() =>
+                                      setHoveredImageProductId(null)
+                                    }
+                                  >
+                                    <img
+                                      src={product.image}
+                                      alt={product.name}
+                                      className="w-16 h-16 md:w-20 md:h-20 object-contain rounded"
+                                    />
+                                  </button>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-2xl p-4 sm:p-6">
+                                  <DialogTitle className="sr-only">
+                                    {product.name} image preview
+                                  </DialogTitle>
+                                  <DialogDescription className="sr-only">
+                                    Expanded view of the product image.
+                                  </DialogDescription>
+                                  <div className="flex items-center justify-center rounded-lg bg-slate-50 p-2 sm:p-4">
+                                    <img
+                                      src={product.image}
+                                      alt={product.name}
+                                      className="max-h-[70vh] max-w-full object-contain rounded-md"
+                                    />
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
                               <div className="flex-1 w-full">
                                 <h4 className="font-semibold text-foreground text-lg leading-tight">
                                   {product.name}
