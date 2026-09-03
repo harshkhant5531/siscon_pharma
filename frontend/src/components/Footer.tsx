@@ -15,10 +15,19 @@ const footerSections = [
   {
     title: "Products",
     links: [
-      { label: "Antibiotic Injections", href: "/products?category=Antibiotic%20Injections" },
+      {
+        label: "Antibiotic Injections",
+        href: "/products?category=Antibiotic%20Injections",
+      },
       { label: "Critical Care", href: "/products?category=Critical%20Care" },
-      { label: "Emergency Medicines", href: "/products?category=Emergency%20Medicines" },
-      { label: "Gastrointestinal", href: "/products?category=Gastrointestinal" },
+      {
+        label: "Emergency Medicines",
+        href: "/products?category=Emergency%20Medicines",
+      },
+      {
+        label: "Gastrointestinal",
+        href: "/products?category=Gastrointestinal",
+      },
     ],
   },
   {
@@ -60,15 +69,21 @@ export function Footer() {
               innovation, and healthcare excellence across India.
             </p>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-sm">
+              <a
+                href="mailto:sisconpharma14@gmail.com"
+                className="flex items-center gap-3 text-sm text-[hsl(var(--footer-foreground))]/80 hover:text-accent transition-colors"
+              >
                 <Mail className="h-4 w-4 text-accent" />
                 <span>sisconpharma14@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm">
+              </a>
+              <a
+                href="tel:+919512131217"
+                className="flex items-center gap-3 text-sm text-[hsl(var(--footer-foreground))]/80 hover:text-accent transition-colors"
+              >
                 <Phone className="h-4 w-4 text-accent" />
                 <span>+91 95121 31217</span>
-              </div>
-              <div className="flex items-start gap-3 text-sm">
+              </a>
+              <div className="flex items-start gap-3 text-sm text-[hsl(var(--footer-foreground))]/80">
                 <MapPin className="h-4 w-4 text-accent mt-0.5" />
                 <span>
                   80FT Road,G-104 Sitaji Township
