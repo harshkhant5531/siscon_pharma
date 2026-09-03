@@ -1,10 +1,86 @@
+import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+type FormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
+const initialFormData: FormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  message: "",
+};
+
 export default function ContactUs() {
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [submitMessage, setSubmitMessage] = useState("");
+
+  const validateForm = () => {
+    const nextErrors: FormErrors = {};
+
+    if (!formData.firstName.trim()) {
+      nextErrors.firstName = "First name is required.";
+    }
+
+    if (!formData.lastName.trim()) {
+      nextErrors.lastName = "Last name is required.";
+    }
+
+    if (!formData.email.trim()) {
+      nextErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      nextErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.phone.trim()) {
+      nextErrors.phone = "Phone number is required.";
+    } else if (!/^[+()\d\s-]{8,}$/.test(formData.phone)) {
+      nextErrors.phone = "Please enter a valid phone number.";
+    }
+
+    if (!formData.message.trim()) {
+      nextErrors.message = "Message is required.";
+    } else if (formData.message.trim().length < 10) {
+      nextErrors.message = "Message should be at least 10 characters long.";
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const handleChange = (field: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      setSubmitMessage("");
+      return;
+    }
+
+    setSubmitMessage(
+      "Your details are valid. Please send the message manually from your email app to sisconpharma14@gmail.com.",
+    );
+    setFormData(initialFormData);
+    setErrors({});
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -105,35 +181,7 @@ export default function ContactUs() {
                 <h3 className="text-2xl font-bold font-heading mb-6">
                   Send a Message
                 </h3>
-                <form
-                  className="space-y-4"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-
-                    const form = e.currentTarget as HTMLFormElement;
-                    const formData = new FormData(form);
-
-                    const firstName =
-                      (formData.get("firstName") as string)?.trim() || "";
-                    const lastName =
-                      (formData.get("lastName") as string)?.trim() || "";
-                    const email =
-                      (formData.get("email") as string)?.trim() || "";
-                    const phone =
-                      (formData.get("phone") as string)?.trim() || "";
-                    const message =
-                      (formData.get("message") as string)?.trim() || "";
-
-                    const subject = encodeURIComponent(
-                      "New enquiry from Siscon Pharma website",
-                    );
-                    const body = encodeURIComponent(
-                      `Name: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
-                    );
-
-                    window.location.href = `mailto:khantharsh87@gmail.com?subject=${subject}&body=${body}`;
-                  }}
-                >
+                <form className="space-y-4" onSubmit={handleSubmit} noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-slate-700">
@@ -142,14 +190,38 @@ export default function ContactUs() {
                       <Input
                         name="firstName"
                         placeholder="First Name"
-                        required
+                        value={formData.firstName}
+                        onChange={(e) =>
+                          handleChange("firstName", e.target.value)
+                        }
+                        aria-invalid={!!errors.firstName}
+                        className={errors.firstName ? "border-red-500" : ""}
                       />
+                      {errors.firstName && (
+                        <p className="text-xs text-red-600">
+                          {errors.firstName}
+                        </p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-slate-700">
                         Last Name
                       </label>
-                      <Input name="lastName" placeholder="Last Name" required />
+                      <Input
+                        name="lastName"
+                        placeholder="Last Name"
+                        value={formData.lastName}
+                        onChange={(e) =>
+                          handleChange("lastName", e.target.value)
+                        }
+                        aria-invalid={!!errors.lastName}
+                        className={errors.lastName ? "border-red-500" : ""}
+                      />
+                      {errors.lastName && (
+                        <p className="text-xs text-red-600">
+                          {errors.lastName}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -160,14 +232,31 @@ export default function ContactUs() {
                       name="email"
                       type="email"
                       placeholder="example@gmail.com"
-                      required
+                      value={formData.email}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                      aria-invalid={!!errors.email}
+                      className={errors.email ? "border-red-500" : ""}
                     />
+                    {errors.email && (
+                      <p className="text-xs text-red-600">{errors.email}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">
                       Phone Number
                     </label>
-                    <Input name="phone" type="tel" placeholder="+91" required />
+                    <Input
+                      name="phone"
+                      type="tel"
+                      placeholder="+91"
+                      value={formData.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                      aria-invalid={!!errors.phone}
+                      className={errors.phone ? "border-red-500" : ""}
+                    />
+                    {errors.phone && (
+                      <p className="text-xs text-red-600">{errors.phone}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">
@@ -175,11 +264,20 @@ export default function ContactUs() {
                     </label>
                     <textarea
                       name="message"
-                      className="w-full min-h-[120px] rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      value={formData.message}
+                      onChange={(e) => handleChange("message", e.target.value)}
+                      className={`w-full min-h-[120px] rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 ${errors.message ? "border-red-500" : ""}`}
                       placeholder="How can we help you?"
-                      required
                     ></textarea>
+                    {errors.message && (
+                      <p className="text-xs text-red-600">{errors.message}</p>
+                    )}
                   </div>
+                  {submitMessage && (
+                    <p className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
+                      {submitMessage}
+                    </p>
+                  )}
                   <Button
                     type="submit"
                     className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 mt-4"
