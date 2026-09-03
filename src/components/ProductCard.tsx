@@ -4,6 +4,7 @@ import { useCart } from "@/context/cart";
 import { toast } from "@/components/ui/sonner";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 export interface Product {
   id: string;
@@ -12,8 +13,12 @@ export interface Product {
   manufacturer: string;
   price?: string;
   inStock: boolean;
+  quantity?: number;
   image: string;
   category: string;
+  expiryDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface ProductCardProps {
@@ -22,6 +27,9 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const isManager = user?.role === 'manager';
+  const isAvailable = product.inStock && product.quantity !== 0;
   return (
     <div className="pharma-card overflow-hidden group">
       <Link to={`/product/${product.id}`}>
@@ -33,12 +41,12 @@ export function ProductCard({ product }: ProductCardProps) {
           />
           <Badge
             className={`absolute top-3 right-3 ${
-              product.inStock
+              isAvailable
                 ? "stock-badge-available"
                 : "stock-badge-unavailable"
             }`}
           >
-            {product.inStock ? "In Stock" : "Out of Stock"}
+            {isAvailable ? "In Stock" : "Out of Stock"}
           </Badge>
         </div>
       </Link>
@@ -62,30 +70,32 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
 
-        <Button
-          className="w-full mt-3"
-          disabled={!product.inStock}
-          variant={product.inStock ? "default" : "secondary"}
-          onClick={() => {
-            if (!product.inStock) return;
-            addToCart(product, 1);
-            toast.success(`${product.name} added to cart`, {
-              action: {
-                label: "View Cart",
-                onClick: () => (window.location.href = "/cart"),
-              },
-            });
-          }}
-        >
-          {product.inStock ? (
-            <>
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Add to Cart
-            </>
-          ) : (
-            "Out of Stock"
-          )}
-        </Button>
+        {!isManager && (
+          <Button
+            className="w-full mt-3"
+            disabled={!isAvailable}
+            variant={isAvailable ? "default" : "secondary"}
+            onClick={() => {
+              if (!isAvailable) return;
+              addToCart(product, 1);
+              toast.success(`${product.name} added to cart`, {
+                action: {
+                  label: "View Cart",
+                  onClick: () => (window.location.href = "/cart"),
+                },
+              });
+            }}
+          >
+            {isAvailable ? (
+              <>
+                <ShoppingCart className="h-4 w-4 mr-2" />
+                Add to Cart
+              </>
+            ) : (
+              "Out of Stock"
+            )}
+          </Button>
+        )}
       </div>
     </div>
   );

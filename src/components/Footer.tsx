@@ -7,7 +7,7 @@ const footerSections = [
     title: "About Siscon Pharma",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Manufacturing", href: "/manufacturing" },
+      { label: "Manufacturing", href: "/manufacturers" },
       { label: "Quality Assurance", href: "/quality" },
       { label: "Certifications", href: "/certifications" },
     ],
@@ -15,22 +15,19 @@ const footerSections = [
   {
     title: "Products",
     links: [
-      {
-        label: "Antibiotic Injections",
-        href: "/products?category=antibiotics",
-      },
-      { label: "ICU Medicines", href: "/products?category=icu" },
-      { label: "Emergency Drugs", href: "/products?category=emergency" },
-      { label: "Critical Care", href: "/products?category=critical-care" },
+      { label: "Antibiotic Injections", href: "/products?category=Antibiotic%20Injections" },
+      { label: "Critical Care", href: "/products?category=Critical%20Care" },
+      { label: "Emergency Medicines", href: "/products?category=Emergency%20Medicines" },
+      { label: "Gastrointestinal", href: "/products?category=Gastrointestinal" },
     ],
   },
   {
     title: "Services",
     links: [
-      { label: "Bulk Supply", href: "/bulk-supply" },
-      { label: "Hospital Supply", href: "/hospital-supply" },
-      { label: "Distributor Enquiry", href: "/distributor" },
-      { label: "Export Services", href: "/export" },
+      { label: "Bulk Supply", href: "/services#bulk-supply" },
+      { label: "Hospital Supply", href: "/hospital-range" },
+      { label: "Distributor Enquiry", href: "/services#distributor-enquiry" },
+      { label: "Export Services", href: "/services#export-services" },
     ],
   },
 ];

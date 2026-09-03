@@ -4,14 +4,20 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getProductById } from "@/data/products";
+import { useProducts } from "@/context/ProductContext";
 import { useCart } from "@/context/cart";
 import { toast } from "@/components/ui/sonner";
+import { useAuth } from "@/context/AuthContext";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { getProductById } = useProducts();
   const product = id ? getProductById(id) : null;
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const isManager = user?.role === 'manager';
+
+  const isAvailable = product && (product.inStock && product.quantity !== 0);
 
   if (!product) {
     return (
@@ -62,12 +68,12 @@ const ProductDetail = () => {
               <div>
                 <Badge
                   className={
-                    product.inStock
+                    isAvailable
                       ? "stock-badge-available"
                       : "stock-badge-unavailable"
                   }
                 >
-                  {product.inStock ? "In Stock" : "Out of Stock"}
+                  {isAvailable ? "In Stock" : "Out of Stock"}
                 </Badge>
                 <h1 className="font-heading text-2xl md:text-3xl font-bold text-foreground mt-4">
                   {product.name}
@@ -130,24 +136,26 @@ const ProductDetail = () => {
 
               {/* Action Buttons */}
               <div className="space-y-3">
-                <Button
-                  className="w-full"
-                  size="lg"
-                  disabled={!product.inStock}
-                  onClick={() => {
-                    if (!product.inStock) return;
-                    addToCart(product, 1);
-                    toast.success(`${product.name} added to cart`, {
-                      action: {
-                        label: "View Cart",
-                        onClick: () => (window.location.href = "/cart"),
-                      },
-                    });
-                  }}
-                >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  {product.inStock ? "Add to Cart" : "Out of Stock"}
-                </Button>
+                {!isManager && (
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    disabled={!isAvailable}
+                    onClick={() => {
+                      if (!isAvailable) return;
+                      addToCart(product, 1);
+                      toast.success(`${product.name} added to cart`, {
+                        action: {
+                          label: "View Cart",
+                          onClick: () => (window.location.href = "/cart"),
+                        },
+                      });
+                    }}
+                  >
+                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    {isAvailable ? "Add to Cart" : "Out of Stock"}
+                  </Button>
+                )}
                 <div className="grid grid-cols-2 gap-3">
                   <Button variant="outline" size="lg">
                     <Package className="h-4 w-4 mr-2" />
